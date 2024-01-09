@@ -1,9 +1,9 @@
 pipeline {
     agent {
         kubernetes {
-          label " jenkins-agent-main"
+            label " jenkins-agent-main"
         }
-        }
+    }
     stages {
         stage('Hello') {
             steps {
@@ -20,6 +20,20 @@ pipeline {
                 sh 'uname -a'
             }
         }
+        stage('Env') {
+            steps {
+                sh 'printenv'
+            }
+        }
+        stage('Env2') {
+            agent {
+                kubernetes {
+                    label " jenkins-agent-spot"
+                }
+            }
+            steps {
+                sh 'printenv'
+            }
+        }
     }
-    
 }
